@@ -1,0 +1,12 @@
+Magnumradnoy Store
+
+12/05/2025 14:33
+
+Milk            580
+Bread           150
+Chocolate       340
+
+TOTAL           1070
+
+Payment Method: Kaspi
+
