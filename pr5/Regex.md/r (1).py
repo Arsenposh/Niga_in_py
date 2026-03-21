@@ -2,11 +2,6 @@ import re
 
 def text_match(text):
 
-    # The pattern '^ab*$' means:
-    # ^ : Start of the string
-    # a : Matches the literal character 'a'
-    # b* : Matches zero or more occurrences of the literal character 'b'
-    # $ : End of the string
     patterns = '^ab*$'
     if re.match(patterns, text):
         return f"'{text}' matched the pattern."
