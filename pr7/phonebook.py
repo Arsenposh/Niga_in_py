@@ -92,4 +92,8 @@ def Del():
             (phone,)
         )
     conn.commit()
+icsv("pr7/contacts.csv")
+ie()
 Del()
+search()
+update()
