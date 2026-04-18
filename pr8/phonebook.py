@@ -66,7 +66,7 @@ def search_contacts():
         name = input("Имя: ")
         cursor.execute(
             "SELECT * FROM phonebook WHERE name ILIKE %s",
-            (  name)
+            ('%' + name + '%',)
         )
 
     elif choice == "2":
