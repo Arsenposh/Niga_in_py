@@ -100,6 +100,7 @@ def delete_contact():
             (phone,)
         )
     conn.commit()
+<<<<<<< HEAD
     print("Удалено!")
 def menu():
     while True:
@@ -132,3 +133,10 @@ def menu():
             print("Ошибка")
 menu()
 conn.close()
+=======
+icsv("pr7/contacts.csv")
+ie()
+Del()
+search()
+update()
+>>>>>>> e56d20a645b8b1222b55aca622e85ab6d2d9f693
