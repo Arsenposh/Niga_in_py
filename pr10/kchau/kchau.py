@@ -3,8 +3,9 @@ import pygame, sys
 from pygame.locals import *
 import random, time
 import os
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
- 
+folder = os.path.dirname(__file__)
+os.chdir(folder)
+
 #Initialzing 
 pygame.init()
  
@@ -52,7 +53,20 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
  
- 
+class Coin(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("coin.png")
+        self.image = pygame.transform.scale(self.image, (40, 40))
+        self.rect = self.image.get_rect()
+        self.rect.center = (random.randint(40, SCREEN_WIDTH-40), 0)
+
+    def move(self):
+        self.rect.move_ip(0, 3)
+
+        if self.rect.top > SCREEN_HEIGHT:
+            self.rect.top = 0
+            self.rect.center = (random.randint(40, SCREEN_WIDTH-40), 0)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
@@ -77,13 +91,18 @@ class Player(pygame.sprite.Sprite):
 #Setting up Sprites        
 P1 = Player()
 E1 = Enemy()
+C1= Coin()
  
 #Creating Sprites Groups
 enemies = pygame.sprite.Group()
 enemies.add(E1)
+coins = pygame.sprite.Group()
+coins.add(C1)
+
 all_sprites = pygame.sprite.Group()
 all_sprites.add(P1)
 all_sprites.add(E1)
+all_sprites.add(C1)
  
 #Adding a new User event 
 INC_SPEED = pygame.USEREVENT + 1
@@ -108,7 +127,12 @@ while True:
     for entity in all_sprites:
         DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
- 
+    
+    if pygame.sprite.spritecollideany(P1, coins):
+        SCORE += 1
+        C1.rect.top = 0
+        C1.rect.center = (random.randint(40, SCREEN_WIDTH-40), 0)
+
     #To be run if collision occurs between Player and Enemy
     if pygame.sprite.spritecollideany(P1, enemies):
           pygame.mixer.Sound('crash.wav').play()
