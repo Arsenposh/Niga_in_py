@@ -4,6 +4,17 @@ from connect import get_connection
  
 conn = get_connection()
 cursor = conn.cursor()
+def init_db():
+    for filename in ["schema.sql", "procedures.sql"]:
+        try:
+            with open(filename, "r", encoding="utf-8") as f:
+                sql = f.read()
+            cursor.execute(sql)
+            conn.commit()
+        except FileNotFoundError:
+            print(f"Файл {filename} не найден!")
+
+init_db()
 def filter_by_group():
     cursor.execute("SELECT id, name FROM groups")
     groups = cursor.fetchall()
