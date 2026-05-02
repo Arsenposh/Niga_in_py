@@ -1,0 +1,273 @@
+[
+  {
+    "name": "JFdjf",
+    "email": "dfjafdfaod",
+    "birthday": "1223-12-23",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "458457483",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "Fernando",
+    "email": "Fernando@gamil.com",
+    "birthday": "1999-12-12",
+    "group": "Friend",
+    "phones": []
+  },
+  {
+    "name": "Shrek",
+    "email": "ogre@swamp.com",
+    "birthday": "2001-04-22",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77077890123",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Spider-Man",
+    "email": "peter@stark.edu",
+    "birthday": "2001-10-20",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77066789012",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "The Terminator",
+    "email": "back@skynet.com",
+    "birthday": "2029-08-15",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77055678901",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Jack Sparrow",
+    "email": "rum@tortuga.sea",
+    "birthday": "1700-06-06",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77044567890",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Ninja Turtle",
+    "email": "donatello@pizza.it",
+    "birthday": "1984-05-10",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77033456789",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "Adal Sikosh",
+    "email": "siko@reality.kz",
+    "birthday": "1990-01-01",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77022345678",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "email": "siuuu@goat.com",
+    "birthday": "1985-02-05",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77011234567",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Shrek",
+    "email": "ogre@swamp.com",
+    "birthday": "2001-04-22",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77077890123",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Spider-Man",
+    "email": "peter@stark.edu",
+    "birthday": "2001-10-20",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77066789012",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "The Terminator",
+    "email": "back@skynet.com",
+    "birthday": "2029-08-15",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77055678901",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Jack Sparrow",
+    "email": "rum@tortuga.sea",
+    "birthday": "1700-06-06",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77044567890",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Ninja Turtle",
+    "email": "donatello@pizza.it",
+    "birthday": "1984-05-10",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77033456789",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "Adal Sikosh",
+    "email": "siko@reality.kz",
+    "birthday": "1990-01-01",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77022345678",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "email": "siuuu@goat.com",
+    "birthday": "1985-02-05",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77011234567",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Shrek",
+    "email": "ogre@swamp.com",
+    "birthday": "2001-04-22",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77077890123",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Spider-Man",
+    "email": "peter@stark.edu",
+    "birthday": "2001-10-20",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77066789012",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "The Terminator",
+    "email": "back@skynet.com",
+    "birthday": "2029-08-15",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77055678901",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Jack Sparrow",
+    "email": "rum@tortuga.sea",
+    "birthday": "1700-06-06",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77044567890",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "name": "Ninja Turtle",
+    "email": "donatello@pizza.it",
+    "birthday": "1984-05-10",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77033456789",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "name": "Adal Sikosh",
+    "email": "siko@reality.kz",
+    "birthday": "1990-01-01",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77022345678",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "email": "siuuu@goat.com",
+    "birthday": "1985-02-05",
+    "group": null,
+    "phones": [
+      {
+        "phone": "+77011234567",
+        "type": "mobile"
+      }
+    ]
+  }
+]

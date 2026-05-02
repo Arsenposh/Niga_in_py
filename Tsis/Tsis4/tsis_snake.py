@@ -1,15 +1,17 @@
 import pygame
 import sys
+import os
 from config import *
 from game import Game
 from db import create_tables, save_game_result, get_top10, get_personal_best
 from settings import load_settings, save_settings
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake Game")
-
 
 font_small = pygame.font.SysFont(None, 25)
 font_mid = pygame.font.SysFont(None, 35)
@@ -32,10 +34,9 @@ def draw_button(surface, text, x, y, w, h, color, hover_color, font):
     surface.blit(label, label_rect)
 
     if is_hover and click[0]:
-        pygame.time.delay(120) 
+        pygame.time.delay(120)
         return True
     return False
-
 
 
 def screen_main_menu():
@@ -120,8 +121,6 @@ def screen_leaderboard():
         title = font_big.render("Leaders", True, YELLOW)
         screen.blit(title, title.get_rect(center=(WIDTH // 2, 30)))
 
-        headers = ["#", "Player", "Score", "Lvl", "Date"]
-        col_x = [20, 55, 240, 310, 370]
         header_surf = font_small.render(
             f"{'#':<3} {'Player':<22} {'Score':<8} {'Lvl':<5} {'Date'}",
             True, LIGHT_GRAY
@@ -185,7 +184,6 @@ def screen_settings(settings):
         if grid_clicked:
             local["grid_overlay"] = not local["grid_overlay"]
 
-
         sound_label = font_mid.render("Sound:", True, WHITE)
         screen.blit(sound_label, (60, 140))
         sound_btn_text = "ON" if local["sound"] else "OFF"
@@ -194,7 +192,6 @@ def screen_settings(settings):
                                     sound_color, GRAY, font_mid)
         if sound_clicked:
             local["sound"] = not local["sound"]
-
 
         color_label = font_mid.render("Color:", True, WHITE)
         screen.blit(color_label, (60, 185))
@@ -223,7 +220,7 @@ def screen_settings(settings):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return settings 
+                return settings
 
         if save_clicked:
             save_settings(local)
@@ -231,7 +228,6 @@ def screen_settings(settings):
 
         pygame.display.update()
         clock.tick(30)
-
 
 
 def screen_game_over(score, level, personal_best):

@@ -17,7 +17,6 @@ ui.init_fonts()
 
 settings = load_settings()
 
-# Музыка
 if settings["sound"]:
     try:
         pygame.mixer.music.load("background.wav")
@@ -139,6 +138,7 @@ def screen_settings():
         ui.draw_settings(surface, settings, buttons)
         pygame.display.flip()
 
+
 username = ""
 
 while True:
@@ -153,10 +153,14 @@ while True:
         if result:
             save_score(username, result["score"], result["distance"])
             action = screen_game_over(result["score"], result["distance"], result["coins"])
-            if action == "retry":
+
+            while action == "retry":
                 result = run_game(surface, settings, username)
                 if result:
                     save_score(username, result["score"], result["distance"])
+                    action = screen_game_over(result["score"], result["distance"], result["coins"])
+                else:
+                    break
 
     elif action == "leaderboard":
         screen_leaderboard()

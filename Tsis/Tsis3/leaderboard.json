@@ -1,13 +1,28 @@
 [
   {
+    "name": "\u0440\u0440",
+    "score": 1514,
+    "distance": 20
+  },
+  {
     "name": "Ar",
     "score": 963,
+    "distance": 13
+  },
+  {
+    "name": "\u0440\u0440",
+    "score": 892,
     "distance": 13
   },
   {
     "name": "\u0430\u0440",
     "score": 852,
     "distance": 11
+  },
+  {
+    "name": "\u0440\u0440",
+    "score": 795,
+    "distance": 10
   },
   {
     "name": "Arsen",
@@ -18,5 +33,20 @@
     "name": "\u0424\u043a",
     "score": 459,
     "distance": 4
+  },
+  {
+    "name": "\u0444\u0444",
+    "score": 190,
+    "distance": 2
+  },
+  {
+    "name": "\u0444\u0444",
+    "score": 171,
+    "distance": 2
+  },
+  {
+    "name": "\u0444\u0444",
+    "score": 170,
+    "distance": 2
   }
 ]

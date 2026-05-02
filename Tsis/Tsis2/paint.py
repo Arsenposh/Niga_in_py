@@ -75,7 +75,6 @@ def draw_toolbar(screen, font, tool, color, size_idx):
 
 
 def get_toolbar_click(mx, my, tool, color, size_idx):
-    """Обрабатывает клик по тулбару, возвращает новые tool, color, size_idx"""
     tool_labels = ['pencil', 'line', 'rect', 'circle', 'square',
                    'tri_right', 'tri_eq', 'rhombus', 'fill', 'text', 'eraser']
     x = 5

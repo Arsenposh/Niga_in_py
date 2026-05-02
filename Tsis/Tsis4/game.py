@@ -1,6 +1,12 @@
 import pygame
 import random
+import os
 from config import *
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def asset(filename):
+    return os.path.join(BASE_DIR, "assets", filename)
 
 
 def load_image(filename, size, fallback_color):
@@ -16,11 +22,10 @@ def load_image(filename, size, fallback_color):
 class Food:
     def __init__(self, snake_body, obstacles):
         self.size = FOOD_SIZE
-        
         self.images = {
-            1: load_image(r"assets\food_1.png", (self.size, self.size), FOOD_COLORS[1]),
-            2: load_image(r"assets\food_2.png", (self.size, self.size), FOOD_COLORS[2]),
-            3: load_image(r"assets\food_3.png", (self.size, self.size), FOOD_COLORS[3])
+            1: load_image(asset("food1.png"), (self.size, self.size), FOOD_COLORS[1]),
+            2: load_image(asset("food2.png"), (self.size, self.size), FOOD_COLORS[2]),
+            3: load_image(asset("food3.png"), (self.size, self.size), FOOD_COLORS[3])
         }
         self.respawn(snake_body, obstacles)
 
@@ -45,7 +50,7 @@ class Food:
 class PoisonFood:
     def __init__(self, snake_body, obstacles):
         self.size = CELL_SIZE
-        self.image = load_image(r"assets\poison.png", (self.size, self.size), POISON_COLOR)
+        self.image = load_image(asset("poison.png"), (self.size, self.size), POISON_COLOR)
         self.respawn(snake_body, obstacles)
 
     def respawn(self, snake_body, obstacles):
@@ -69,12 +74,11 @@ class PowerUp:
     def __init__(self, snake_body, obstacles, food_pos, poison_pos):
         self.size = CELL_SIZE
         self.type = random.choice(["speed_boost", "slow_motion", "shield"])
-        self.active = False         
-        self.active_start = 0       
-        self.collected = False      
-        
-        
-        self.image = load_image(r"assets\powerup_{self.type}.png", (self.size, self.size), POWERUP_COLORS[self.type])
+        self.active = False
+        self.active_start = 0
+        self.collected = False
+
+        self.image = load_image(asset(f"powerup_{self.type}.png"), (self.size, self.size), POWERUP_COLORS[self.type])
 
         while True:
             x = random.randrange(0, WIDTH, CELL_SIZE)
@@ -113,13 +117,10 @@ class Snake:
         self.dy = 0
         self.color = tuple(settings["snake_color"])
         self.shield_active = False
-        
-        
-        self.head_img = load_image(r"assets\snake_head.png", (CELL_SIZE, CELL_SIZE), self.color)
-        
-        
+
+        self.head_img = load_image(asset("snake_head.png"), (CELL_SIZE, CELL_SIZE), self.color)
         darker_color = tuple(max(c - 50, 0) for c in self.color)
-        self.body_img = load_image(r"assets\snake_body.png", (CELL_SIZE, CELL_SIZE), darker_color)
+        self.body_img = load_image(asset("snake_body.png"), (CELL_SIZE, CELL_SIZE), darker_color)
 
     def change_direction(self, key):
         if key == pygame.K_UP and self.dy == 0:
@@ -170,14 +171,14 @@ class Game:
         self.level = 1
         self.speed = START_SPEED
         self.obstacles = []
-        
-        self.obstacle_img = load_image(r"assets\obstacle.png", (CELL_SIZE, CELL_SIZE), GRAY)
+
+        self.obstacle_img = load_image(asset("obstacle.png"), (CELL_SIZE, CELL_SIZE), GRAY)
 
         self.food = Food(self.snake.body, self.obstacles)
         self.poison = PoisonFood(self.snake.body, self.obstacles)
         self.powerup = None
         self.powerup_spawn_timer = pygame.time.get_ticks()
-        self.powerup_spawn_delay = 10000  
+        self.powerup_spawn_delay = 10000
 
         self.clock = pygame.time.Clock()
         self.running = True
@@ -244,11 +245,13 @@ class Game:
         obstacle_hit = head in self.obstacles
 
         if wall_hit or self_hit or obstacle_hit:
-            if self.snake.shield_active and (wall_hit or self_hit):
+            if self.snake.shield_active and (wall_hit or self_hit or obstacle_hit):
                 self.snake.shield_active = False
                 if wall_hit:
                     self.snake.body[0][0] = max(0, min(head[0], WIDTH - CELL_SIZE))
                     self.snake.body[0][1] = max(0, min(head[1], HEIGHT - CELL_SIZE))
+                if obstacle_hit:
+                    self.snake.body[0] = self.snake.body[1][:]
             else:
                 self.game_over = True
                 return
@@ -308,7 +311,6 @@ class Game:
             for y in range(0, HEIGHT, CELL_SIZE):
                 pygame.draw.line(self.screen, DARK_GRAY, (0, y), (WIDTH, y))
 
-        
         for obs in self.obstacles:
             self.screen.blit(self.obstacle_img, (obs[0], obs[1]))
 

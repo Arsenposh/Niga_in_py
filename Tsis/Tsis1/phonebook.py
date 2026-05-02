@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from connect import get_connection
  
 conn = get_connection()
@@ -75,7 +76,7 @@ def paginated_view():
     offset = 0
  
     while True:
-        cursor.execute("SELECT * FROM pagination(%s, %s)", (page_size, offset))
+        cursor.execute("SELECT * FROM phonebook ORDER BY id LIMIT %s OFFSET %s", (page_size, offset))
         rows = cursor.fetchall()
  
         print(f"\n--- Страница {offset // page_size + 1} ---")
@@ -216,8 +217,9 @@ def import_json():
     print("Импорт завершён!")
 def import_csv():
     filename = input("Имя CSV файла (contacts.csv): ").strip() or "contacts.csv"
- 
-    with open(filename, "r", encoding="utf-8") as f:
+    filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+    
+    with open(filepath, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             name       = row.get("name", "")

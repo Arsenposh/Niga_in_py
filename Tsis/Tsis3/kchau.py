@@ -5,6 +5,7 @@ from pygame.locals import *
 import os
 folder = os.path.dirname(__file__)
 os.chdir(folder)
+
 WHITE  = (255, 255, 255)
 BLACK  = (0,   0,   0)
 RED    = (220, 50,  50)
@@ -29,11 +30,12 @@ DIFFICULTY = {
     "normal": {"speed": 5, "enemy_count": 2, "obstacle_freq": 120},
     "hard":   {"speed": 7, "enemy_count": 3, "obstacle_freq":  80},
 }
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, color):
         super().__init__()
         self.image = pygame.image.load("Player.png").convert_alpha()
-        self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.rect.center = (SCREEN_W // 2, 520)
         self.shield = False
@@ -47,8 +49,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw_shield(self, surface):
         if self.shield:
-            pygame.draw.circle(surface, YELLOW,
-                               self.rect.center, 35, 3)
+            pygame.draw.circle(surface, YELLOW, self.rect.center, 35, 3)
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -57,7 +58,8 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.image.load("Enemy.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.speed = speed
-        self.rect.center = (random.randint(40, SCREEN_W - 40), -60)
+        self.rect.center = (random.randint(40, SCREEN_W - 40),
+                            random.randint(-300, -60))
 
     def move(self):
         self.rect.y += self.speed
@@ -69,6 +71,10 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self, speed):
         super().__init__()
         self.speed = speed
+        self._pick_random()
+        self.rect.center = (random.randint(40, SCREEN_W - 40), -30)
+
+    def _pick_random(self):
         self.weight = random.choice([1, 2, 3])
         if self.weight == 1:
             self.image = pygame.image.load("coin.png").convert_alpha()
@@ -77,19 +83,13 @@ class Coin(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load("coin3.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (random.randint(40, SCREEN_W - 40), -30)
 
     def move(self):
         self.rect.y += self.speed
         if self.rect.top > SCREEN_H:
-            # При переносе монеты наверх можно заново выбрать её вес и картинку
-            self.__init__(self.speed) 
-
-
-    def move(self):
-        self.rect.y += self.speed
-        if self.rect.top > SCREEN_H:
-            self.rect.center = (random.randint(40, SCREEN_W - 40), -30)
+            old_rect_x = random.randint(40, SCREEN_W - 40)
+            self._pick_random()
+            self.rect.center = (old_rect_x, -30)
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -113,7 +113,6 @@ class Obstacle(pygame.sprite.Sprite):
 
 
 class PowerUp(pygame.sprite.Sprite):
-    """Nitro / Shield / Repair"""
     TYPES = ["nitro", "shield", "repair"]
     COLORS = {"nitro": ORANGE, "shield": BLUE, "repair": GREEN}
 
@@ -133,18 +132,18 @@ class PowerUp(pygame.sprite.Sprite):
 
     def move(self):
         self.rect.y += self.speed
-        # исчезает через 8 секунд или выходит за экран
         if self.rect.top > SCREEN_H or time.time() - self.spawn_time > 8:
             self.kill()
+
+
 def run_game(surface, settings, username):
     clock = pygame.time.Clock()
     font  = pygame.font.SysFont("Verdana", 18)
 
-    diff   = DIFFICULTY[settings["difficulty"]]
-    speed  = diff["speed"]
+    diff     = DIFFICULTY[settings["difficulty"]]
+    speed    = diff["speed"]
     obs_freq = diff["obstacle_freq"]
 
-    # Фон
     try:
         background = pygame.image.load("AnimatedStreet.png").convert()
     except:
@@ -152,7 +151,6 @@ def run_game(surface, settings, username):
         background.fill((60, 60, 60))
     bg_y = 0
 
-    # Объекты
     car_color = CAR_COLORS[settings["car_color"]]
     player = Player(car_color)
 
@@ -179,28 +177,28 @@ def run_game(surface, settings, username):
     running = True
     while running:
         clock.tick(60)
-        frame += 1
+        frame    += 1
         distance += 1
+        score    += 1
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                return None  # выход из игры
+                return None
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 return None
+
         bg_y += speed
         if bg_y >= SCREEN_H:
             bg_y = 0
         surface.blit(background, (0, bg_y - SCREEN_H))
         surface.blit(background, (0, bg_y))
+
         player.move()
-        for e in enemies:
-            e.move()
-        for c in coins_grp:
-            c.move()
-        for o in obstacles:
-            o.move()
-        for p in powerups:
-            p.move()
+        for e in enemies:   e.move()
+        for c in coins_grp: c.move()
+        for o in obstacles: o.move()
+        for p in powerups:  p.move()
+
         if frame % obs_freq == 0:
             obstacles.add(Obstacle(speed))
 
@@ -209,8 +207,8 @@ def run_game(surface, settings, username):
 
         hit_coins = pygame.sprite.spritecollide(player, coins_grp, False)
         for coin in hit_coins:
-            coins  += coin.weight
-            score  += coin.weight * 10
+            coins += coin.weight
+            score += coin.weight * 10
             coin.rect.center = (random.randint(40, SCREEN_W - 40), -30)
             if coins % lvl_step == 0:
                 speed += 1
@@ -225,12 +223,12 @@ def run_game(surface, settings, username):
             elif pu.kind == "shield":
                 shield_active = True
                 player.shield = True
-                powerup_end = time.time() + 999 
+                powerup_end = 0
             elif pu.kind == "repair":
                 obstacles.empty()
                 active_powerup = None
 
-        if active_powerup == "nitro" and time.time() > powerup_end:
+        if active_powerup == "nitro" and powerup_end > 0 and time.time() > powerup_end:
             speed = max(diff["speed"], speed - 3)
             nitro_active   = False
             active_powerup = None
@@ -266,19 +264,19 @@ def run_game(surface, settings, username):
         surface.blit(player.image, player.rect)
         player.draw_shield(surface)
 
-        # HUD
-        surface.blit(font.render(f"Score: {score}",    True, WHITE), (10, 10))
-        surface.blit(font.render(f"Coins: {coins}",    True, YELLOW), (10, 32))
-        surface.blit(font.render(f"Dist:  {distance // 60}m", True, WHITE), (10, 54))
+        surface.blit(font.render(f"Score: {score}",          True, WHITE),  (10, 10))
+        surface.blit(font.render(f"Coins: {coins}",          True, YELLOW), (10, 32))
+        surface.blit(font.render(f"Dist:  {distance // 60}m",True, WHITE),  (10, 54))
 
         if active_powerup:
-            remaining = max(0, int(powerup_end - time.time()))
-            pu_text = f"{active_powerup.upper()}"
             if active_powerup == "nitro":
-                pu_text += f" {remaining}s"
+                remaining = max(0, int(powerup_end - time.time()))
+                pu_text = f"NITRO {remaining}s"
+            elif active_powerup == "shield":
+                pu_text = "SHIELD"
+            else:
+                pu_text = active_powerup.upper()
             surface.blit(font.render(pu_text, True, ORANGE), (SCREEN_W - 120, 10))
-
-        score += 1  
 
         pygame.display.flip()
 
